@@ -22,9 +22,9 @@ def main():
             st.error("Firebase Database URL is required")
             st.stop()
 
-        if firebase_admin.get_app(name='[DEFAULT]'):    
-            firebase_admin.delete_app(name='[DEFAULT]')
-        
+        if firebase_admin._apps:
+            firebase_admin.delete_app(firebase_admin.get_app())
+
         cred = credentials.Certificate(json.loads(fb_credentails.getvalue().decode("utf-8")))
         firebase_admin.initialize_app(cred, {
             'databaseURL': fb_database_url
